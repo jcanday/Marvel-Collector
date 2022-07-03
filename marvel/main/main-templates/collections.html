@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    {% with messages = get_flashed_messages(with_categories = true) %}
+        {% if messages %}
+            {% for cat, msg in messages %}
+                {% if cat == 'auth-success' or cat == 'char-created' or cat =='comment-posted' %}
+                <div class="container">
+                    {{ msg }}
+                    <button type="button" class="close" data-dismiss = "alert" onclick="this.parentElement.style.display='none'">&times;</button>
+                </div>
+                {% endif %}
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% endwith %}
+</div>
+<section style="padding:4rem 0;">
+    <div class="container" id="collection-container">
+        <h2>Email: {{viewuser.email}}</h2>
+        {%if current_user.name%}
+        <h5>Name: {{viewuser.name}}</h5>
+        {%endif%}
+        {%if current_user.token == token %}
+        <p>Token: {{current_user.token}}</p>
+        {%endif%}
+        <div class="row">
+                {%if res%}
+                <div class="col-md-12">
+                <div class="grid">
+                    {% for char in res %}
+                    <div class="grid-box" style="padding:2rem;border-radius:20px; border:solid 2px #7a0a00;display:flex;gap:2rem;flex-direction:column;box-shadow: 0 0 5px 0px #7a0a00;">
+                        <img class="img-responsive" src="../static/images/logo.webp" alt="">
+                        <div class="char-content">
+                            <h3>Name: {{char.name}}</h3>
+                            <p>Desc: {{char.desc}}</p>
+                            <p>Super Power: {{char.super_power}}</p>
+                            <p>Comics Appeared In: {{char.comics_appeared}}</p>
+                            <p>Date Obtained: {{char.date_created}}</p>
+                        </div>
+                        {%if current_user.token == token%}
+                        <a href="/collections/delete/{{char.id}}" class="btn btn-primary danger btn-danger">Delete</a>    
+                        {%endif%}                    
+                    </div>
+                
+                    {% endfor %}
+                </div>
+                </div>
+                {% endif %}  
+                
+        </div> 
+    </div>
+</section>
+
+<section class="container-fluid" style="text-align:center;padding:4rem 0;background-color:#7a0a00;">
+    {%if current_user.token == token%}
+    <div class="row" style="justify-content:center;align-items:center;padding:4rem 0;color:white;">
+        <aside class="col-12 col-md-6">
+            <h5>Go Get You Some Characters!!!</h5>
+            {% include 'charaddform.html' %}
+        </aside>
+    </div>
+    {%endif%}
+                           
+</section>
+<section class="container-fluid" style="padding:4rem 0;background-color:#a4a8ae;">
+    
+                
+                <div class="row" style="justify-content:center;">
+                    {% if comments %}
+                    <div class="col-md-6 col-12">
+                        <h2>Comments</h2>
+                        {% for comment in comments %}
+                        <div class="comment-container">
+                            <p>{{comment.post}}</p>
+                            <p style="font-weight:bold;">{{comment.poster}}</p>
+                        </div>
+                        {%endfor%}
+                    </div>
+                    {%endif%}
+                    {% if others %}
+                    <div class="col-md-3">
+                        <h5>Other Users:</h5>
+                        <ul id="user-list" style="padding:1rem;border:#7a0a00 1px solid; border-radius:10px; background-color:#a4a8ae;list-style:none;">
+                        {% for user in others %}
+                        <li><a href="/collections/{{user.token}}">{{user.email}}{%if user.name %}: {{user.name}}{%endif%}</a></li>
+                        {%endfor%}
+                        </ul>
+                    </div>    
+                    {% endif %}  
+                </div>
+                
+    <div class="row" style="justify-content:center;">
+        <div class="col-12 col-md-6">
+            <h5>Comment Something, I Dare You</h5>
+            {% include 'comment_form.html'%}
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

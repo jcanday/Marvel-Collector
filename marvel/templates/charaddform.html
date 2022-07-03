@@ -1,0 +1,26 @@
+<form method = "POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group" style="display:flex;gap:2rem;flex-direction:column; text-align:center">
+        <fieldset id="name-field">
+            {{ form.name.label }}
+            {{ form.name(class = "form-control", placeholder = "Enter Name here")}}
+        </fieldset>
+
+        <fieldset id="desc-field">
+            {{ form.desc.label }}
+            {{ form.desc(class = "form-control", placeholder = "Enter Description")}}
+        </fieldset>
+
+        <fieldset id="sup-field">
+            {{ form.super_power.label }}
+            {{ form.super_power(class = "form-control", placeholder = "Enter Super Power!")}}
+        </fieldset>
+
+        <fieldset id="sup-field">
+            {{ form.comics_appeared.label }}
+            {{ form.comics_appeared(class = "form-control", placeholder = "Enter how many comics characters has appeared in!")}}
+        </fieldset>
+        <!--Submit Button-->
+        {{ form.submit_button(class = "btn btn-primary btn-block" ,style="background-color:white;color:#7a0a00;outline:none;")}}
+    </div>
+</form>

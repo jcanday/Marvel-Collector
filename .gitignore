@@ -1,0 +1,4 @@
+.env
+migrations
+marvel_env
+__pycache__

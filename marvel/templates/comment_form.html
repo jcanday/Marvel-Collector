@@ -1,0 +1,12 @@
+<form method = "POST">
+    {{ commentform.hidden_tag() }}
+    <div class="form-group" style="display:flex;flex-direction:column;gap:2rem;">
+        <fieldset id="post-field">
+            {{ commentform.post.label }}
+            {{ commentform.post(class = "form-control", placeholder = "Enter whatever you gotta say  here")}}
+        </fieldset>
+
+        <!--Submit Button-->
+        {{ commentform.submit_button(class = "btn btn-primary btn-block btn-danger")}}
+    </div>
+</form>
